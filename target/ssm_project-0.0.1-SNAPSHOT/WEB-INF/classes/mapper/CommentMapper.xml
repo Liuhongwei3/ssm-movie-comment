@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.example.pojo.Comment">
+        <id property="commentId" column="comment_id" jdbcType="VARCHAR"/>
+        <result property="commentVId" column="comment_vid" jdbcType="VARCHAR"/>
+        <result property="commentUName" column="comment_uname" jdbcType="VARCHAR"/>
+        <result property="commentContent" column="comment_content" jdbcType="VARCHAR"/>
+        <result property="commentTime" column="comment_time" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        comment_id, comment_vid, comment_uname, comment_content, comment_time
+    </sql>
+    <sql id="Insert_Column_List">
+        comment_vid, comment_uname, comment_time, comment_content
+    </sql>
+
+    <!--分页查询评论-->
+    <select id="queryCommentPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        order by comment_time desc
+        limit #{startRows,jdbcType=INTEGER},30
+    </select>
+
+    <!--分页查询评论-->
+    <select id="selectCommentPageByVId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        where comment_vid = #{commentVId,jdbcType=INTEGER}
+        order by comment_time desc
+        limit #{startRows,jdbcType=INTEGER},30
+    </select>
+
+    <!--分页查询评论-->
+    <select id="selectCommentPageByUName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from comment
+        where comment_uname = #{commentUName,jdbcType=VARCHAR}
+        order by comment_time desc
+        limit #{startRows,jdbcType=INTEGER},30
+    </select>
+
+    <!-- add comment -->
+    <insert id="createComment">
+        insert into Comment(<include refid="Insert_Column_List"/>)
+        values(#{commentVId,jdbcType=INTEGER}, #{commentUName,jdbcType=VARCHAR}, #{commentTime,jdbcType=VARCHAR},
+        #{commentContent,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteCommentById" parameterType="INTEGER">
+        delete from comment
+        where comment_id = #{commentId,jdbcType=INTEGER}
+    </delete>
+</mapper>

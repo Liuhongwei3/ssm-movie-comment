@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.MovieMapper">
+    <resultMap id="BaseResultMap" type="com.example.pojo.Movie">
+        <id property="movieId" column="movie_id" jdbcType="VARCHAR"/>
+        <result property="movieName" column="movie_name" jdbcType="VARCHAR"/>
+        <result property="movieCover" column="movie_cover" jdbcType="VARCHAR"/>
+        <result property="movieDirector" column="movie_director" jdbcType="VARCHAR"/>
+        <result property="movieType" column="movie_type" jdbcType="VARCHAR"/>
+        <result property="movieActors" column="movie_actors" jdbcType="VARCHAR"/>
+        <result property="movieDescription" column="movie_description" jdbcType="VARCHAR"/>
+        <result property="movieRate" column="movie_rate" jdbcType="VARCHAR"/>
+        <result property="movieTime" column="movie_time" jdbcType="VARCHAR"/>
+        <result property="movieDate" column="movie_date" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        movie_id, movie_name, movie_cover, movie_director, movie_type,
+        movie_actors, movie_description, movie_rate, movie_time, movie_date
+    </sql>
+
+    <!--分页查询电影-->
+    <select id="queryMoviePage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from movie
+        order by movie_id asc
+        limit #{startRows,jdbcType=INTEGER},30
+    </select>
+
+    <!--分页查询电影-->
+    <select id="selectMoviePageById" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from movie
+        where movie_id = #{movieId,jdbcType=INTEGER}
+        limit #{startRows,jdbcType=INTEGER},30
+    </select>
+</mapper>

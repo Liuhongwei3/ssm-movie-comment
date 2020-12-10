@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.example.pojo.User">
+        <id property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userSex" column="user_sex" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="user_pwd" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, user_name, user_sex, user_pwd
+    </sql>
+    <sql id="Insert_Column_List">
+        user_name, user_sex, user_pwd
+    </sql>
+
+    <!--分页查询用户-->
+    <select id="queryUserPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        order by user_id desc
+        limit #{startRows,jdbcType=INTEGER},5
+    </select>
+
+    <!--分页查询用户-->
+    <select id="selectUserPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="userName != null and userName !=''">
+                and user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="userSex != null and userSex !=''">
+                and user_sex = #{userSex}
+            </if>
+        </where>
+        order by user_id desc
+        limit #{startRows,jdbcType=INTEGER},5
+    </select>
+
+    <!--查询用户个数-->
+    <select id="getRowCount" resultType="java.lang.Integer">
+        select count(*) from user
+        <where>
+            <if test="userName != null and userName !=''">
+                and user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="userSex != null and userSex !=''">
+                and user_sex = #{userSex}
+            </if>
+        </where>
+    </select>
+
+    <!--添加用户信息-->
+    <!--    <insert id="createUser" parameterType="com.example.pojo.User">-->
+    <!--        insert into User(<include refid="Insert_Column_List"/>)-->
+    <!--        values(#{userName}, #{userSex}, #{userPwd})-->
+    <!--    </insert>-->
+    <insert id="createUser" parameterType="String">
+        insert into User(<include refid="Insert_Column_List"/>)
+        values(#{userName,jdbcType=VARCHAR}, #{userSex,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR})
+    </insert>
+
+    <!--根据 user_id 查询用户-->
+    <select id="selectUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <!--根据 user_name 查询用户-->
+    <select id="selectUserByName" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_name = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <!--根据 user_id 删除用户-->
+    <delete id="deleteUserById" parameterType="String">
+        delete from user
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+
+
+    <!--根据 user_id 批量删除用户-->
+    <!--    <delete id="deleteUserByIdList" parameterType="java.util.List">-->
+    <!--        delete from user where user_id in-->
+    <!--        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">#{item,jdbcType=VARCHAR}-->
+    <!--        </foreach>-->
+    <!--    </delete>-->
+
+    <!--根据 user_id 更新用户信息-->
+    <update id="updateUserById" parameterType="com.example.pojo.User">
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userSex != null">
+                user_sex = #{userSex,jdbcType=VARCHAR},
+            </if>
+            <if test="userPwd != null">
+                user_pwd = #{userPwd,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
