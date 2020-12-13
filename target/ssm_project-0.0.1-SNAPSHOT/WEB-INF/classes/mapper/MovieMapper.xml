@@ -18,6 +18,10 @@
         movie_id, movie_name, movie_cover, movie_director, movie_type,
         movie_actors, movie_description, movie_rate, movie_time, movie_date
     </sql>
+    <sql id="Insert_Column_List">
+        movie_name, movie_cover, movie_director, movie_type,
+        movie_actors, movie_description, movie_rate, movie_time, movie_date
+    </sql>
 
     <!--分页查询电影-->
     <select id="queryMoviePage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -36,4 +40,34 @@
         where movie_id = #{movieId,jdbcType=INTEGER}
         limit #{startRows,jdbcType=INTEGER},30
     </select>
+
+    <!--insert movie-->
+    <insert id="insertMovie" parameterType="String">
+        insert into Movie(<include refid="Insert_Column_List"/>)
+        values(#{movieName,jdbcType=VARCHAR}, #{movieCover,jdbcType=VARCHAR}, #{movieDirector,jdbcType=VARCHAR},
+        #{movieType,jdbcType=VARCHAR}, #{movieActors,jdbcType=VARCHAR}, #{movieDescription,jdbcType=VARCHAR},
+        #{movieRate,jdbcType=VARCHAR}, #{movieTime,jdbcType=VARCHAR}, #{movieDate,jdbcType=VARCHAR})
+    </insert>
+
+    <!--  update movie  -->
+    <update id="updateMovieById" parameterType="com.example.pojo.Movie">
+        update Movie
+        <set>
+            <if test="movieName != null">movie_name=#{movieName},</if>
+            <if test="movieCover != null">movie_cover=#{movieCover},</if>
+            <if test="movieDirector != null">movie_director=#{movieDirector},</if>
+            <if test="movieType != null">movie_type=#{movieType},</if>
+            <if test="movieActors != null">movie_actors=#{movieActors},</if>
+            <if test="movieDescription != null">movie_description=#{movieDescription},</if>
+            <if test="movieRate != null">movie_rate=#{movieRate},</if>
+            <if test="movieTime != null">movie_time=#{movieTime},</if>
+            <if test="movieDate != null">movie_date=#{movieDate}</if>
+        </set>
+        where movie_id = #{movieId,jdbcType=INTEGER}
+    </update>
+
+    <delete id="deleteMovieById" parameterType="INTEGER">
+        delete from movie
+        where movie_id = #{movieId,jdbcType=INTEGER}
+    </delete>
 </mapper>

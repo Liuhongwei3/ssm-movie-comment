@@ -26,11 +26,11 @@ public class CommentController {
 
     @RequestMapping("/queryCommentPage")
     @ResponseBody
-    public List<Comment> queryCommentPage(Integer page) {
-        int pageNow = page == null ? 1 : page;
-        int pageSize = 5;
-        int startRows = pageSize * (pageNow - 1);
-        return commentService.queryCommentPage(startRows);
+    public List<Comment> queryCommentPage() {
+//        int pageNow = page == null ? 1 : page;
+//        int pageSize = 5;
+//        int startRows = pageSize * (pageNow - 1);
+        return commentService.queryCommentPage();
     }
 
     @RequestMapping("/selectCommentPageByVId")

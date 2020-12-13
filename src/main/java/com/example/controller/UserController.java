@@ -19,11 +19,11 @@ public class UserController {
 
     @RequestMapping("/queryUserPage")
     @ResponseBody
-    public List<User> queryUserPage(Integer page) {
-        int pageNow = page == null ? 1 : page;
-        int pageSize = 5;
-        int startRows = pageSize * (pageNow - 1);
-        return userService.queryUserPage(startRows);
+    public List<User> queryUserPage() {
+//        int pageNow = page == null ? 1 : page;
+//        int pageSize = 5;
+//        int startRows = pageSize * (pageNow - 1);
+        return userService.queryUserPage();
     }
 
     @RequestMapping("/selectUserPage")
@@ -93,9 +93,8 @@ public class UserController {
 
     @RequestMapping("/updateUserById")
     @ResponseBody
-    public Integer updateUserById(User user) {
+    public Integer updateUserById(@RequestBody User user) {
+        System.out.println("----------------" + user.getUserName());
         return userService.updateUserById(user);
     }
-
-
 }

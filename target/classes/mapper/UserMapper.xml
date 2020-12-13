@@ -16,12 +16,12 @@
     </sql>
 
     <!--分页查询用户-->
+    <!--    limit #{startRows,jdbcType=INTEGER},5-->
     <select id="queryUserPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from user
-        order by user_id desc
-        limit #{startRows,jdbcType=INTEGER},5
+        order by user_id asc
     </select>
 
     <!--分页查询用户-->
@@ -81,7 +81,7 @@
     </select>
 
     <!--根据 user_id 删除用户-->
-    <delete id="deleteUserById" parameterType="String">
+    <delete id="deleteUserById">
         delete from user
         where user_id = #{userId,jdbcType=INTEGER}
     </delete>
@@ -96,7 +96,7 @@
 
     <!--根据 user_id 更新用户信息-->
     <update id="updateUserById" parameterType="com.example.pojo.User">
-        update user
+        update User
         <set>
             <if test="userName != null">
                 user_name = #{userName,jdbcType=VARCHAR},

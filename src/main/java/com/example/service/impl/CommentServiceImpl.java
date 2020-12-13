@@ -17,8 +17,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
 
     @Override
-    public List<Comment> queryCommentPage(Integer startRows) {
-        return null;
+    public List<Comment> queryCommentPage() {
+        return commentMapper.queryCommentPage();
     }
 
     @Override

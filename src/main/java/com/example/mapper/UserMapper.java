@@ -5,16 +5,14 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-
 public interface UserMapper {
 
     /**
      * 分页查询 User
      *
-     * @param startRows 起始页
      * @return List<User>
      */
-    List<User> queryUserPage(Integer startRows);
+    List<User> queryUserPage();
 
     /**
      * 分页查询 User 带条件

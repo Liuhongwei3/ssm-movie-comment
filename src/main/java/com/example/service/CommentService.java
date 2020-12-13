@@ -12,10 +12,9 @@ public interface CommentService {
     /**
      * 分页查询 Movie
      *
-     * @param startRows 起始页
      * @return List<Comment>
      */
-    List<Comment> queryCommentPage(Integer startRows);
+    List<Comment> queryCommentPage();
 
     /**
      * 分页查询 Movie 带条件

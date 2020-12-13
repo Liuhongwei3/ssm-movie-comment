@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.mapper.AdminMapper">
+    <resultMap id="BaseResultMap" type="com.example.pojo.Admin">
+        <id property="adminId" column="admin_id" jdbcType="VARCHAR"/>
+        <result property="adminName" column="admin_name" jdbcType="VARCHAR"/>
+        <result property="adminPwd" column="admin_pwd" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        admin_id, admin_name, admin_pwd
+    </sql>
+
+    <!--根据 admin_name 查询管理员-->
+    <select id="selectAdminByName" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from admin
+        where admin_name = #{adminName,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

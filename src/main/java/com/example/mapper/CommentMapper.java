@@ -10,6 +10,12 @@ import java.util.List;
  */
 public interface CommentMapper {
     /**
+     *
+     * @return
+     */
+    List<Comment> queryCommentPage();
+
+    /**
      * 分页查询 Movie 带条件
      *
      * @param commentVId

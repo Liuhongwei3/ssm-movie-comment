@@ -22,4 +22,19 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> selectMoviePageById(int movieId, Integer startRows) {
         return movieMapper.selectMoviePageById(movieId, startRows);
     }
+
+    @Override
+    public Integer deleteMovieById(int movieId) {
+        return movieMapper.deleteMovieById(movieId);
+    }
+
+    @Override
+    public Integer insertMovie(Movie movie) {
+        return movieMapper.insertMovie(movie);
+    }
+
+    @Override
+    public Integer updateMovieById(Movie movie) {
+        return movieMapper.updateMovieById(movie);
+    }
 }

@@ -22,7 +22,6 @@
         <include refid="Base_Column_List"/>
         from comment
         order by comment_time desc
-        limit #{startRows,jdbcType=INTEGER},30
     </select>
 
     <!--分页查询评论-->

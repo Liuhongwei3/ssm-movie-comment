@@ -11,6 +11,7 @@ import java.util.List;
 public interface MovieService {
     /**
      * 分页查询 Movie
+     *
      * @param startRows 起始页
      * @return List<Movie>
      */
@@ -18,10 +19,30 @@ public interface MovieService {
 
     /**
      * 分页查询 Movie 带条件
+     *
      * @param movieId
      * @param startRows
      * @return
      */
-    List<Movie> selectMoviePageById(@Param("movieId")int movieId, @Param("startRows")Integer startRows);
+    List<Movie> selectMoviePageById(@Param("movieId") int movieId, @Param("startRows") Integer startRows);
 
+    /**
+     * @param movieId
+     * @return
+     */
+    Integer deleteMovieById(int movieId);
+
+    /**
+     * @param movie
+     * @return
+     */
+    Integer insertMovie(Movie movie);
+
+    /**
+     * update movie
+     *
+     * @param movie
+     * @return
+     */
+    Integer updateMovieById(Movie movie);
 }
